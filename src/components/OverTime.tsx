@@ -23,9 +23,9 @@ export function OverTime() {
     .filter((s) => s.plans[planId])
     .map((s) => ({
       t: Date.parse(s.date + "T00:00:00Z"),
-      y: s.plans[planId].mid / s.plans[planId].price,
+      y: s.plans[planId].high / s.plans[planId].price,
       label: fmtDate(s.date),
-      detail: `${usd(s.plans[planId].mid)} typical API value for ${usd(s.plans[planId].price)}`,
+      detail: `${usd(s.plans[planId].high)} full-plan API value for ${usd(s.plans[planId].price)}`,
     }));
 
   return (
@@ -70,7 +70,7 @@ export function OverTime() {
           <MiniLine points={ledgerPts} yFmt={(n) => n.toFixed(1) + "x"} yLabel="API value ÷ price" ariaLabel={`${plan.name} value multiple per snapshot`} color={vendorColor(vendorById(plan.vendorId))} />
         </div>
         <p className="mt-2 text-xs text-ink-3">
-          {snapshots.length} snapshot{snapshots.length === 1 ? "" : "s"} recorded ({snapshots.map((s) => fmtDate(s.date)).join(", ")}). Latest typical multiple for {plan.name}: {mult(plan.apiValue.mid / plan.price)}.
+          {snapshots.length} snapshot{snapshots.length === 1 ? "" : "s"} recorded ({snapshots.map((s) => fmtDate(s.date)).join(", ")}). Latest full-plan multiple for {plan.name}: {mult(plan.apiValue.high / plan.price)}.
         </p>
       </section>
 

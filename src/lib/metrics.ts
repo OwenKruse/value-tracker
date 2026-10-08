@@ -9,7 +9,7 @@ import type { Model, Plan, PlanMetrics, Settings } from "./types";
 export const WORKLOAD = { cacheReadPerOut: 40, cacheWritePerOut: 2, freshInputPerOut: 4 };
 
 export const DEFAULT_SETTINGS: Settings = {
-  scenario: "mid",
+  scenario: "high",
   refModelId: "sonnet-5.5",
   basisFilter: "all",
   weights: { value: 40, intel: 35, capacity: 25 },

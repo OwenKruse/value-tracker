@@ -16,7 +16,7 @@ export function VendorPlans({ vendorId }: { vendorId: string }) {
   return (
     <section aria-labelledby="ladder">
       <SectionHeading id="ladder" title="Plan ladder">
-        Values follow your controls on the Overview page ({settings.scenario === "mid" ? "typical" : settings.scenario === "low" ? "light" : "heavy"} use).
+        Values follow your controls on the Overview page ({settings.scenario === "high" ? "full-plan" : settings.scenario === "mid" ? "typical-use" : "light-use"} case).
       </SectionHeading>
       <div className="grid gap-3 md:grid-cols-2">
         {rows.map((r) => (
@@ -106,13 +106,13 @@ export function VendorHistory({ vendorId }: { vendorId: string }) {
             .filter((s) => s.plans[p.id])
             .map((s) => ({
               t: Date.parse(s.date + "T00:00:00Z"),
-              y: s.plans[p.id].mid / s.plans[p.id].price,
+              y: s.plans[p.id].high / s.plans[p.id].price,
               label: fmtDate(s.date),
-              detail: `${usd(s.plans[p.id].mid)} value for ${usd(s.plans[p.id].price)}`,
+              detail: `${usd(s.plans[p.id].high)} value for ${usd(s.plans[p.id].price)}`,
             }));
           return (
             <figure key={p.id} className="card p-4">
-              <figcaption className="mb-2 text-sm font-medium">{p.name}: snapshot ledger (typical case)</figcaption>
+              <figcaption className="mb-2 text-sm font-medium">{p.name}: snapshot ledger (full-plan case)</figcaption>
               <MiniLine points={pts} yFmt={(n) => n.toFixed(1) + "x"} yLabel="API value ÷ price" color={vendorColor(vendor)} ariaLabel={`${p.name} value multiple per snapshot`} />
               {pts.length < 2 && <p className="mt-1 text-xs text-ink-3">One snapshot so far. Each <code>npm run snapshot</code> adds a point.</p>}
             </figure>

@@ -50,7 +50,7 @@ export default function MethodologyPage() {
         <p>
           <strong className="text-ink">Estimated ({estimated.length} plans).</strong> Anthropic, OpenAI, Cognition and Google publish
           limits as multiples, message ranges or &quot;higher limits&quot;, not dollars. Cursor publishes pools but not the
-          per-tier dollar amount on the page I could read. For these I give a low / typical / heavy range. They are my
+          per-tier dollar amount on the page I could read. For these I give a low / typical / full-plan range. The default is the full-plan end, which assumes you use your whole allowance every cycle. They are my
           editorial estimates, built from each vendor&apos;s stated ratios (for example Max 5x and 20x against Pro, or Plus
           message ranges) and typical agentic task sizes. I did not have access to measured usage logs, so treat them as
           orders of magnitude, not facts.
