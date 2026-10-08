@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import { SettingsProvider } from "@/components/SettingsProvider";
+import { LogoMark } from "@/components/LogoMark";
 import { SiteNav } from "@/components/SiteNav";
 import { AS_OF, vendors } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
@@ -36,7 +37,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <footer className="border-t border-line bg-surface-2/50">
             <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:grid-cols-2 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
               <div>
-                <div className="text-lg font-semibold tracking-tight">CodingPlans</div>
+                <div className="flex items-center gap-2 text-lg font-semibold tracking-tight">
+                  <LogoMark size={24} />
+                  CodingPlans
+                </div>
                 <p className="mt-2 max-w-xs font-mono text-[12px] leading-relaxed text-ink-2">
                   What each AI coding subscription is really worth at API prices. Plan data as of {fmtDate(AS_OF)}.
                   Estimated figures are editorial. Not financial advice.

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo } from "react";
 import { BarList, type BarRow } from "./charts/BarList";
+import { ColumnChart, type ColumnRow } from "./charts/ColumnChart";
 import { LogScatter, type ScatterPoint } from "./charts/LogScatter";
 import { Controls } from "./Controls";
 import { PlanTable } from "./PlanTable";
@@ -25,6 +26,22 @@ export function Dashboard() {
   );
 
   const tag = (r: (typeof rows)[number]) => (r.plan.basis === "estimated" && !r.overridden ? " · estimate" : "");
+
+  const scoreCols: ColumnRow[] = byScore.map((r) => ({
+    id: r.plan.id,
+    label: r.plan.name,
+    value: r.score,
+    valueLabel: r.score.toFixed(0),
+    color: vendorColor(r.vendor),
+    icon: <VendorDot vendor={r.vendor} size={16} />,
+    hatched: r.plan.basis === "estimated",
+    tooltip: [
+      `Score ${r.score.toFixed(0)} of 100`,
+      `${usd(r.plan.price)}/mo · ${mult(r.multiple)} value`,
+      `${tokensM(r.outputTokensM)} output tok/mo`,
+      r.intel != null ? `Best model: ${r.topModel?.name} (${r.intel})` : "Best-model intelligence n/a",
+    ],
+  }));
 
   const bars: BarRow[] = byMultiple.map((r) => ({
     id: r.plan.id,
@@ -125,6 +142,14 @@ export function Dashboard() {
           example from your Claude Code or Codex usage dashboard).
         </SectionHeading>
         {rows.length > 0 ? <PlanTable rows={rows} /> : <p className="text-sm text-ink-2">No plans match the current filter.</p>}
+      </section>
+
+      <section aria-labelledby="score-chart" className="card p-4 sm:p-6">
+        <SectionHeading id="score-chart" eyebrow="Score" title="Composite score by plan">
+          Each plan&apos;s 0 to 100 score blends subsidy, intelligence and capacity using the weights in Filters. Hatched
+          columns are estimates, solid columns are vendor-published.
+        </SectionHeading>
+        <ColumnChart rows={scoreCols} ariaLabel="Composite score by plan, highest first" />
       </section>
 
       <section aria-labelledby="mult-chart" className="card p-4 sm:p-6">
