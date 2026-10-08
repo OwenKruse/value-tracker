@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useSettings } from "./SettingsProvider";
 import { VendorDot } from "./ui";
 import { mult, r2, tokensM, usd } from "@/lib/format";
 import type { PlanMetrics } from "@/lib/types";
@@ -11,68 +10,13 @@ type SortKey = "score" | "price" | "apiValue" | "multiple" | "outputTokensM" | "
 
 const COLS: { key: SortKey; label: string; hint: string; align?: "right" }[] = [
   { key: "price", label: "Price/mo", hint: "Month-to-month list price in USD", align: "right" },
-  { key: "apiValue", label: "API value", hint: "Dollar value of included usage at API list prices. Click a value to enter your own.", align: "right" },
+  { key: "apiValue", label: "API value", hint: "Dollar value of included usage at API list prices. A dot marks a number you entered in Filters.", align: "right" },
   { key: "multiple", label: "Value ×", hint: "API value ÷ price. 1.0x means no subsidy.", align: "right" },
   { key: "outputTokensM", label: "Output tok/mo", hint: "Output tokens that dollar value buys on the plan's best model (shown under the plan name), including the cached context re-read", align: "right" },
   { key: "costPerMOut", label: "$ / 1M out", hint: "Effective plan cost per 1M output tokens on the plan's best model", align: "right" },
   { key: "intel", label: "Intel", hint: "Artificial Analysis Intelligence Index of the best model on the plan", align: "right" },
   { key: "score", label: "Score", hint: "Weighted composite, 0 to 100", align: "right" },
 ];
-
-function ValueCell({ row }: { row: PlanMetrics }) {
-  const { settings, setOverride } = useSettings();
-  // null while not editing: show the computed value; a string while the user types
-  const [draft, setDraft] = useState<string | null>(null);
-  const shown = draft ?? String(Math.round(row.apiValue * 100) / 100);
-
-  const commit = () => {
-    const text = draft ?? "";
-    setDraft(null);
-    const n = Number(text);
-    if (text.trim() === "" || !isFinite(n) || n < 0) {
-      setOverride(row.plan.id, null);
-      return;
-    }
-    if (!row.overridden && Math.abs(n - row.plan.apiValue[settings.scenario]) < 0.005) return;
-    setOverride(row.plan.id, n);
-  };
-
-  return (
-    <div className="flex items-center justify-end gap-1">
-      <span className="text-ink-3">$</span>
-      <input
-        aria-label={`API-equivalent value per month for ${row.plan.name}`}
-        inputMode="decimal"
-        value={shown}
-        onFocus={() => setDraft(shown)}
-        onChange={(e) => setDraft(e.target.value)}
-        onBlur={commit}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") (e.target as HTMLInputElement).blur();
-          if (e.key === "Escape") {
-            setDraft(null);
-            setOverride(row.plan.id, null);
-            (e.target as HTMLInputElement).blur();
-          }
-        }}
-        className={`num w-16 rounded border bg-transparent px-1 py-0.5 text-right ${
-          row.overridden ? "border-accent font-medium text-ink" : "border-transparent hover:border-line"
-        }`}
-      />
-      {row.overridden && (
-        <button
-          type="button"
-          aria-label={`Reset ${row.plan.name} to the default value`}
-          onClick={() => setOverride(row.plan.id, null)}
-          className="text-xs text-accent-ink underline"
-          title="Reset to default"
-        >
-          reset
-        </button>
-      )}
-    </div>
-  );
-}
 
 export function PlanTable({ rows }: { rows: PlanMetrics[] }) {
   const [sort, setSort] = useState<{ key: SortKey; dir: 1 | -1 }>({ key: "score", dir: -1 });
@@ -130,7 +74,10 @@ export function PlanTable({ rows }: { rows: PlanMetrics[] }) {
                 </Link>
               </th>
               <td className="num px-3 py-2.5 text-right">{usd(r.plan.price)}</td>
-              <td className="px-3 py-1.5"><ValueCell row={r} /></td>
+              <td className="num px-3 py-2.5 text-right">
+                {usd(r.apiValue)}
+                {r.overridden && <span className="ml-1 text-accent" title="Your own number, set in Filters" aria-label="custom value">●</span>}
+              </td>
               <td className="num px-3 py-2.5 text-right font-medium">{mult(r.multiple)}</td>
               <td className="num px-3 py-2.5 text-right">{tokensM(r.outputTokensM)}</td>
               <td className="num px-3 py-2.5 text-right">{usd(r.costPerMOut)}</td>

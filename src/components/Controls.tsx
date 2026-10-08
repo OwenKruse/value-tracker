@@ -3,13 +3,87 @@
 import { useState } from "react";
 import { useSettings } from "./SettingsProvider";
 import { Segmented } from "./ui";
-import type { Weights } from "@/lib/types";
+import { plans } from "@/lib/data";
+import { usd } from "@/lib/format";
+import type { Plan, Weights } from "@/lib/types";
 
 const WEIGHTS: { key: keyof Weights; label: string; hint: string }[] = [
   { key: "value", label: "Subsidy", hint: "API-equivalent value ÷ plan price" },
   { key: "intel", label: "Intelligence", hint: "Best model on the plan (Artificial Analysis index)" },
   { key: "capacity", label: "Capacity", hint: "Absolute output tokens per month" },
 ];
+
+
+function OverrideRow({ plan }: { plan: Plan }) {
+  const { settings, setOverride } = useSettings();
+  const custom = settings.overrides[plan.id];
+  const fallback = plan.apiValue[settings.scenario];
+  // null while not editing: show the saved value; a string while the user types
+  const [draft, setDraft] = useState<string | null>(null);
+  const shown = draft ?? (custom != null ? String(custom) : "");
+
+  const commit = () => {
+    const text = (draft ?? "").trim();
+    setDraft(null);
+    const n = Number(text);
+    setOverride(plan.id, text === "" || !isFinite(n) || n < 0 ? null : n);
+  };
+
+  return (
+    <div className="grid grid-cols-[1fr_auto_auto] items-center gap-2 text-[13px]">
+      <label htmlFor={`own-${plan.id}`} className="min-w-0 truncate">
+        {plan.name} <span className="text-ink-3">{usd(plan.price)}/mo</span>
+      </label>
+      <div className="flex items-center gap-1">
+        <span className="text-ink-3">$</span>
+        <input
+          id={`own-${plan.id}`}
+          inputMode="decimal"
+          placeholder={String(fallback)}
+          value={shown}
+          onFocus={() => setDraft(shown)}
+          onChange={(e) => setDraft(e.target.value)}
+          onBlur={commit}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+          }}
+          className={`num w-20 rounded-md border bg-surface px-2 py-1 text-right ${custom != null ? "border-accent" : "border-line"}`}
+        />
+      </div>
+      <button
+        type="button"
+        onClick={() => setOverride(plan.id, null)}
+        disabled={custom == null}
+        aria-label={`Reset ${plan.name} to the default value`}
+        className="w-10 text-left text-xs text-accent-ink underline disabled:invisible"
+      >
+        reset
+      </button>
+    </div>
+  );
+}
+
+function OwnNumbers() {
+  const estimated = plans.filter((p) => p.basis === "estimated");
+  return (
+    <details className="group lg:col-span-2">
+      <summary className="eyebrow cursor-pointer select-none list-none hover:!text-ink [&::-webkit-details-marker]:hidden">
+        <span aria-hidden className="mr-1 inline-block transition-transform group-open:rotate-90">▸</span>
+        Use your own numbers
+      </summary>
+      <p className="mt-2 max-w-2xl text-xs text-ink-3">
+        For plans where the vendor doesn&apos;t publish the dollar value of included usage, enter what yours is worth per month at
+        API list prices (for example from <code className="rounded bg-surface-2 px-1">ccusage</code> or the Codex usage
+        dashboard). Leave blank to use the default. Saved in this browser only.
+      </p>
+      <div className="mt-3 grid gap-x-8 gap-y-2 sm:grid-cols-2">
+        {estimated.map((p) => (
+          <OverrideRow key={p.id} plan={p} />
+        ))}
+      </div>
+    </details>
+  );
+}
 
 export function Controls() {
   const { settings, update, reset, isCustomised } = useSettings();
@@ -112,6 +186,8 @@ export function Controls() {
           </div>
         )}
       </div>
+
+      <OwnNumbers />
     </section>
     </div>
   );

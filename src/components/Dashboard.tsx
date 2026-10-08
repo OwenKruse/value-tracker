@@ -138,8 +138,7 @@ export function Dashboard() {
 
       <section aria-labelledby="leaderboard">
         <SectionHeading id="leaderboard" eyebrow="Leaderboard" title="Plans ranked by value">
-          Click any column to sort, any plan to open its vendor page, and any API value to type in your own number (for
-          example from your Claude Code or Codex usage dashboard).
+          Click any column to sort and any plan to open its vendor page. To use your own usage numbers, open Filters.
         </SectionHeading>
         {rows.length > 0 ? <PlanTable rows={rows} /> : <p className="text-sm text-ink-2">No plans match the current filter.</p>}
       </section>
