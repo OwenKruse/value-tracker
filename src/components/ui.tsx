@@ -1,11 +1,17 @@
 "use client";
 
+import { VendorLogo } from "./Logo";
 import type { Basis, Confidence, Vendor } from "@/lib/types";
 
 export const vendorColor = (v: Vendor) => `var(--v${v.colorSlot})`;
 
-export function VendorDot({ vendor }: { vendor: Vendor }) {
-  return <span aria-hidden className="inline-block h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: vendorColor(vendor) }} />;
+/** Product icon (models.dev logo, or a monogram where none exists). */
+export function VendorDot({ vendor, size = 18 }: { vendor: Vendor; size?: number }) {
+  return (
+    <span className="inline-flex shrink-0 text-ink" title={vendor.name}>
+      <VendorLogo vendor={vendor} size={size} />
+    </span>
+  );
 }
 
 export function BasisBadge({ basis, confidence }: { basis: Basis; confidence: Confidence }) {
@@ -43,7 +49,7 @@ export function Segmented<T extends string>({
   label: string;
 }) {
   return (
-    <div role="radiogroup" aria-label={label} className="inline-flex rounded-lg border border-line bg-surface-2 p-0.5">
+    <div role="radiogroup" aria-label={label} className="inline-flex rounded-md border border-line bg-surface-2 p-0.5">
       {options.map((o) => {
         const on = o.value === value;
         return (
@@ -54,8 +60,8 @@ export function Segmented<T extends string>({
             aria-checked={on}
             title={o.hint}
             onClick={() => onChange(o.value)}
-            className={`rounded-md px-3 py-1.5 text-[13px] transition-colors ${
-              on ? "bg-surface font-medium text-ink shadow-sm" : "text-ink-2 hover:text-ink"
+            className={`rounded-[5px] px-3 py-1.5 font-mono text-[12px] transition-colors ${
+              on ? "bg-surface text-ink shadow-sm" : "text-ink-2 hover:text-ink"
             }`}
           >
             {o.label}
@@ -66,23 +72,34 @@ export function Segmented<T extends string>({
   );
 }
 
-export function SectionHeading({ title, children, id }: { title: string; children?: React.ReactNode; id?: string }) {
+export function SectionHeading({
+  title,
+  children,
+  id,
+  eyebrow,
+}: {
+  title: string;
+  children?: React.ReactNode;
+  id?: string;
+  eyebrow?: string;
+}) {
   return (
-    <div className="mb-4">
-      <h2 id={id} className="text-lg font-semibold tracking-tight">
+    <div className="mb-5">
+      {eyebrow && <div className="eyebrow mb-2">[ {eyebrow} ]</div>}
+      <h2 id={id} className="text-xl font-medium tracking-tight sm:text-2xl">
         {title}
       </h2>
-      {children && <p className="mt-1 max-w-3xl text-sm text-ink-2">{children}</p>}
+      {children && <p className="mt-1.5 max-w-3xl text-sm text-ink-2">{children}</p>}
     </div>
   );
 }
 
 export function Stat({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="card p-3 sm:p-4">
-      <div className="text-[11px] font-medium uppercase tracking-wide text-ink-3 sm:text-xs">{label}</div>
-      <div className="num mt-1 text-xl font-semibold tracking-tight sm:text-2xl">{value}</div>
-      {sub && <div className="mt-0.5 text-xs text-ink-2 sm:text-[13px]">{sub}</div>}
+    <div className="card corners bg-surface p-4 sm:p-5">
+      <div className="eyebrow">{label}</div>
+      <div className="num mt-2 text-2xl font-medium tracking-tight sm:text-3xl">{value}</div>
+      {sub && <div className="mt-1 font-mono text-[11px] leading-snug text-ink-2 sm:text-xs">{sub}</div>}
     </div>
   );
 }

@@ -8,7 +8,7 @@ import { Controls } from "./Controls";
 import { PlanTable } from "./PlanTable";
 import { useSettings } from "./SettingsProvider";
 import { SectionHeading, Stat, VendorDot, vendorColor } from "./ui";
-import { plansForVendor, vendors, watchlist } from "@/lib/data";
+import { AS_OF, plansForVendor, vendors, watchlist } from "@/lib/data";
 import { mult, tokensM, usd } from "@/lib/format";
 import { computeMetrics } from "@/lib/metrics";
 
@@ -33,6 +33,7 @@ export function Dashboard() {
     value: r.multiple,
     valueLabel: mult(r.multiple),
     color: vendorColor(r.vendor),
+    icon: <VendorDot vendor={r.vendor} size={16} />,
     hatched: r.plan.basis === "estimated",
     tooltip: `${r.plan.name}: ${usd(r.apiValue)} of API-equivalent usage for ${usd(r.plan.price)} (${r.plan.basis})`,
   }));
@@ -59,16 +60,52 @@ export function Dashboard() {
   }));
 
   return (
-    <div className="flex flex-col gap-10">
-      <section className="flex flex-col gap-3">
-        <h1 className="max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl">
-          What does each AI coding plan really give you for the money?
+    <div className="flex flex-col gap-14">
+      <section className="flex flex-col items-center gap-6 pt-6 text-center sm:pt-12">
+        <div className="eyebrow corners px-4 py-2">AI coding plans · {AS_OF}</div>
+        <h1 className="max-w-3xl text-4xl font-medium leading-[1.08] tracking-tight sm:text-6xl">
+          What does each AI coding plan really give you?
         </h1>
-        <p className="max-w-3xl text-ink-2">
-          Flat-rate plans are often subsidised: the usage inside a $200 plan can be worth several times that at API list
-          prices. This page converts every plan into API-equivalent dollars, output tokens and a single comparable score,
-          next to the intelligence of the models you can actually use.
+        <p className="max-w-xl font-mono text-[13px] leading-relaxed text-ink-2 sm:text-sm">
+          Flat-rate plans are often subsidised. We convert every plan into API-equivalent dollars, output tokens and a
+          single score, next to the intelligence of the models you can actually use.
         </p>
+        <div className="flex flex-wrap justify-center gap-3">
+          <a href="#leaderboard" className="btn btn-primary">
+            <span aria-hidden className="btn-icon">»</span>
+            See the leaderboard
+          </a>
+          <Link href="/methodology" className="btn btn-secondary corners">
+            How it works
+          </Link>
+        </div>
+      </section>
+
+      <section aria-labelledby="products" className="corners rounded-lg border border-line bg-surface-2/60 p-4 sm:p-8">
+        <h2 id="products" className="eyebrow mb-5 text-center">[ Products we track ]</h2>
+        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {vendors.map((v) => {
+            const ps = plansForVendor(v.id);
+            const best = rows.filter((r) => r.vendor.id === v.id).sort((a, b) => b.multiple - a.multiple)[0];
+            return (
+              <li key={v.id}>
+                <Link
+                  href={`/vendors/${v.slug}`}
+                  className="corners group flex h-full flex-col items-start gap-3 rounded-md border border-line bg-surface p-4 transition-all hover:-translate-y-0.5 hover:border-ink-3 hover:shadow-[0_10px_24px_-14px_rgba(0,0,0,0.25)]"
+                >
+                  <VendorDot vendor={v} size={26} />
+                  <div>
+                    <div className="font-mono text-[12px] font-medium uppercase tracking-wide">{v.name}</div>
+                    <div className="num mt-1 font-mono text-[11px] text-ink-3">
+                      {ps.length} plan{ps.length === 1 ? "" : "s"} · {Math.min(...ps.map((p) => p.price)) === Math.max(...ps.map((p) => p.price)) ? usd(ps[0].price) : `${usd(Math.min(...ps.map((p) => p.price)))}–${usd(Math.max(...ps.map((p) => p.price)))}`}
+                      {best ? ` · ≤${mult(best.multiple)}` : ""}
+                    </div>
+                  </div>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       {rows.length > 0 && (
@@ -83,23 +120,23 @@ export function Dashboard() {
       <Controls />
 
       <section aria-labelledby="leaderboard">
-        <SectionHeading id="leaderboard" title="Leaderboard">
+        <SectionHeading id="leaderboard" eyebrow="Leaderboard" title="Plans ranked by value">
           Click any column to sort, any plan to open its vendor page, and any API value to type in your own number (for
           example from your Claude Code or Codex usage dashboard).
         </SectionHeading>
         {rows.length > 0 ? <PlanTable rows={rows} /> : <p className="text-sm text-ink-2">No plans match the current filter.</p>}
       </section>
 
-      <section aria-labelledby="mult-chart" className="card p-4 sm:p-5">
-        <SectionHeading id="mult-chart" title="Value multiple: API value ÷ price">
+      <section aria-labelledby="mult-chart" className="card p-4 sm:p-6">
+        <SectionHeading id="mult-chart" eyebrow="Subsidy" title="Value multiple: API value ÷ price">
           How many dollars of API list-price usage each dollar of subscription buys. Hatched bars are estimates, solid
           bars are vendor-published. The dashed line is break-even with just paying the API.
         </SectionHeading>
         <BarList rows={bars} ariaLabel="Value multiple by plan" refLine={{ value: 1, label: "1x: same as API" }} />
       </section>
 
-      <section aria-labelledby="scatter" className="card p-4 sm:p-5">
-        <SectionHeading id="scatter" title="Price vs API-equivalent value">
+      <section aria-labelledby="scatter" className="card p-4 sm:p-6">
+        <SectionHeading id="scatter" eyebrow="Price vs value" title="Price vs API-equivalent value">
           Points above the 1x line get more than they pay for. Log scales on both axes: every step up the diagonals is a
           bigger subsidy.
         </SectionHeading>
@@ -120,33 +157,8 @@ export function Dashboard() {
         />
       </section>
 
-      <section aria-labelledby="vendors">
-        <SectionHeading id="vendors" title="Explore by product">
-          Each page covers the plan ladder, what the limits really are, the models on offer and how value has moved over time.
-        </SectionHeading>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {vendors.map((v) => {
-            const ps = plansForVendor(v.id);
-            const best = rows.filter((r) => r.vendor.id === v.id).sort((a, b) => b.multiple - a.multiple)[0];
-            return (
-              <Link key={v.id} href={`/vendors/${v.slug}`} className="card group flex flex-col gap-2 p-4 transition-colors hover:border-ink-3">
-                <div className="flex items-center gap-2">
-                  <VendorDot vendor={v} />
-                  <span className="font-medium group-hover:underline">{v.name}</span>
-                </div>
-                <p className="text-[13px] text-ink-2">{v.tagline}</p>
-                <p className="num mt-auto pt-1 text-xs text-ink-3">
-                  {ps.length} plan{ps.length === 1 ? "" : "s"} · {usd(Math.min(...ps.map((p) => p.price)))}–{usd(Math.max(...ps.map((p) => p.price)))}/mo
-                  {best ? ` · up to ${mult(best.multiple)}` : ""}
-                </p>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
-      <section aria-labelledby="watch" className="card p-4 sm:p-5">
-        <SectionHeading id="watch" title="Not scored yet">
+      <section aria-labelledby="watch" className="card p-4 sm:p-6">
+        <SectionHeading id="watch" eyebrow="Watchlist" title="Not scored yet">
           Products worth tracking where I could not verify plan pricing from a readable source.
         </SectionHeading>
         <ul className="grid gap-3 sm:grid-cols-3">

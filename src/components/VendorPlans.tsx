@@ -15,12 +15,12 @@ export function VendorPlans({ vendorId }: { vendorId: string }) {
 
   return (
     <section aria-labelledby="ladder">
-      <SectionHeading id="ladder" title="Plan ladder">
+      <SectionHeading id="ladder" eyebrow="Plans" title="Plan ladder">
         Values follow your controls on the Overview page ({settings.scenario === "high" ? "full-plan" : settings.scenario === "mid" ? "typical-use" : "light-use"} case).
       </SectionHeading>
       <div className="grid gap-3 md:grid-cols-2">
         {rows.map((r) => (
-          <article key={r.plan.id} className="card flex flex-col gap-3 p-4">
+          <article key={r.plan.id} className="card corners flex flex-col gap-3 p-5">
             <header className="flex items-start justify-between gap-3">
               <div>
                 <h3 className="font-semibold">{r.plan.name}</h3>
@@ -30,15 +30,15 @@ export function VendorPlans({ vendorId }: { vendorId: string }) {
             </header>
             <dl className="grid grid-cols-3 gap-2 text-sm">
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-3">API value</dt>
+                <dt className="eyebrow">API value</dt>
                 <dd className="num font-medium">{usd(r.apiValue)}</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-3">Value ×</dt>
+                <dt className="eyebrow">Value ×</dt>
                 <dd className="num font-medium">{mult(r.multiple)}</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-3">Output tok/mo</dt>
+                <dt className="eyebrow">Output tok/mo</dt>
                 <dd className="num font-medium">{tokensM(r.outputTokensM)}</dd>
               </div>
             </dl>
@@ -70,7 +70,7 @@ export function VendorHistory({ vendorId }: { vendorId: string }) {
 
   return (
     <section aria-labelledby="time" className="flex flex-col gap-6">
-      <SectionHeading id="time" title="Value over time">
+      <SectionHeading id="time" eyebrow="History" title="Value over time">
         Dated reference points, a snapshot ledger you extend with <code className="rounded bg-surface-2 px-1 text-[12px]">npm run snapshot</code>, and the plan changes that moved the numbers.
       </SectionHeading>
 

@@ -2,16 +2,16 @@
 
 :root {
   color-scheme: light;
-  --bg: #f6f6f3;
-  --surface: #fcfcfb;
-  --surface-2: #f0efec;
-  --line: #e3e2dc;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f6f6f5;
+  --line: #e8e8e5;
   --ink: #0b0b0b;
-  --ink-2: #52514e;
+  --ink-2: #4d4c49;
   --ink-3: #75746f;
   --accent: #2a78d6;
   --accent-ink: #184f95;
-  --grid: #e8e7e2;
+  --grid: #ededea;
 
   /* series: published vs estimated */
   --s-published: #2a78d6;
@@ -122,7 +122,85 @@ input[type="range"] {
 .card {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 8px;
+}
+
+/* Small L-shaped ticks inset in each corner, drawn with gradients so any element can opt in. */
+.corners {
+  --tick: 7px;
+  --inset: 5px;
+  --tc: var(--ink-3);
+  background-repeat: no-repeat;
+  background-image:
+    linear-gradient(var(--tc), var(--tc)), linear-gradient(var(--tc), var(--tc)),
+    linear-gradient(var(--tc), var(--tc)), linear-gradient(var(--tc), var(--tc)),
+    linear-gradient(var(--tc), var(--tc)), linear-gradient(var(--tc), var(--tc)),
+    linear-gradient(var(--tc), var(--tc)), linear-gradient(var(--tc), var(--tc));
+  background-size:
+    var(--tick) 1px, 1px var(--tick),
+    var(--tick) 1px, 1px var(--tick),
+    var(--tick) 1px, 1px var(--tick),
+    var(--tick) 1px, 1px var(--tick);
+  background-position:
+    left var(--inset) top var(--inset), left var(--inset) top var(--inset),
+    right var(--inset) top var(--inset), right var(--inset) top var(--inset),
+    left var(--inset) bottom var(--inset), left var(--inset) bottom var(--inset),
+    right var(--inset) bottom var(--inset), right var(--inset) bottom var(--inset);
+}
+
+/* Tiny uppercase mono label used for eyebrows, column heads and nav. */
+.eyebrow {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 13px;
+  line-height: 1;
+  white-space: nowrap;
+  border-radius: 4px;
+  transition: transform 120ms, box-shadow 120ms, background-color 120ms;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-primary {
+  padding: 0 1.1rem 0 0;
+  height: 40px;
+  color: #fff;
+  background: var(--accent);
+  box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+.btn-primary:hover {
+  box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--accent) 80%, transparent);
+}
+.btn-primary .btn-icon {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  aspect-ratio: 1;
+  margin: 0;
+  background: color-mix(in srgb, #fff 18%, transparent);
+  border-right: 1px solid color-mix(in srgb, #fff 25%, transparent);
+  border-radius: 4px 0 0 4px;
+}
+.btn-secondary {
+  height: 40px;
+  padding: 0 1.25rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.btn-secondary:hover {
+  border-color: var(--ink-3);
 }
 
 @media (prefers-reduced-motion: reduce) {

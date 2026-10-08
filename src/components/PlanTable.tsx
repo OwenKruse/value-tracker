@@ -90,12 +90,12 @@ export function PlanTable({ rows }: { rows: PlanMetrics[] }) {
     setSort((s) => (s.key === key ? { key, dir: (s.dir * -1) as 1 | -1 } : { key, dir: key === "price" || key === "costPerMOut" ? 1 : -1 }));
 
   return (
-    <div className="card overflow-x-auto">
+    <div className="card corners overflow-x-auto">
       <table className="w-full min-w-[760px] border-collapse text-sm">
         <caption className="sr-only">AI coding plans ranked by composite value score. Column headers sort the table.</caption>
         <thead>
-          <tr className="border-b border-line text-left text-xs text-ink-3">
-            <th scope="col" className="sticky left-0 z-10 bg-surface px-3 py-2.5 font-medium">Plan</th>
+          <tr className="eyebrow border-b border-line bg-surface-2/50 text-left">
+            <th scope="col" className="sticky left-0 z-10 bg-surface-2 px-3 py-3 font-normal">Plan</th>
             {COLS.map((c) => {
               const on = sort.key === c.key;
               return (
@@ -103,7 +103,7 @@ export function PlanTable({ rows }: { rows: PlanMetrics[] }) {
                   key={c.key}
                   scope="col"
                   aria-sort={on ? (sort.dir === 1 ? "ascending" : "descending") : "none"}
-                  className={`px-3 py-2.5 font-medium ${c.align === "right" ? "text-right" : ""}`}
+                  className={`px-3 py-3 font-normal ${c.align === "right" ? "text-right" : ""}`}
                 >
                   <button type="button" onClick={() => toggle(c.key)} title={c.hint} className="inline-flex items-center gap-1 hover:text-ink">
                     {c.label}

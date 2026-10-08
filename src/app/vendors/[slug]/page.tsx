@@ -23,13 +23,17 @@ export default async function VendorPage(props: PageProps<"/vendors/[slug]">) {
   return (
     <div className="flex flex-col gap-10">
       <div>
-        <Link href="/" className="text-sm text-ink-2 hover:text-ink">← All plans</Link>
-        <div className="mt-3 flex items-center gap-2.5">
-          <VendorDot vendor={vendor} />
-          <h1 className="text-3xl font-semibold tracking-tight">{vendor.name}</h1>
-          <span className="text-sm text-ink-3">{vendor.company}</span>
+        <Link href="/" className="eyebrow hover:!text-ink">← All plans</Link>
+        <div className="mt-5 flex items-center gap-4">
+          <span className="corners grid h-14 w-14 shrink-0 place-items-center rounded-md border border-line bg-surface">
+            <VendorDot vendor={vendor} size={30} />
+          </span>
+          <div>
+            <div className="eyebrow">[ {vendor.company} ]</div>
+            <h1 className="text-3xl font-medium tracking-tight sm:text-4xl">{vendor.name}</h1>
+          </div>
         </div>
-        <p className="mt-2 max-w-3xl text-lg text-ink-2">{vendor.tagline}</p>
+        <p className="mt-5 max-w-3xl text-lg text-ink">{vendor.tagline}</p>
         <p className="mt-2 max-w-3xl text-sm text-ink-2">{vendor.summary}</p>
         <a href={vendor.pricingUrl} target="_blank" rel="noreferrer" className="mt-3 inline-block text-sm text-accent-ink underline underline-offset-2">
           Official pricing page ↗
@@ -39,13 +43,13 @@ export default async function VendorPage(props: PageProps<"/vendors/[slug]">) {
       <VendorPlans vendorId={vendor.id} />
 
       <section className="grid gap-4 md:grid-cols-2" aria-label="Strengths and caveats">
-        <div className="card p-4">
+        <div className="card corners p-5">
           <h2 className="mb-2 font-semibold">Strengths</h2>
           <ul className="flex list-disc flex-col gap-1.5 pl-5 text-sm text-ink-2">
             {vendor.strengths.map((s) => <li key={s}>{s}</li>)}
           </ul>
         </div>
-        <div className="card p-4">
+        <div className="card corners p-5">
           <h2 className="mb-2 font-semibold">Watch out for</h2>
           <ul className="flex list-disc flex-col gap-1.5 pl-5 text-sm text-ink-2">
             {vendor.caveats.map((s) => <li key={s}>{s}</li>)}

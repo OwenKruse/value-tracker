@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { LogScatter, type ScatterPoint } from "./charts/LogScatter";
+import { CreatorLogo } from "./Logo";
 import { Segmented, SectionHeading, Stat } from "./ui";
 import { aaLeaderboard, models } from "@/lib/data";
 import { allInCostPerMOut } from "@/lib/metrics";
@@ -57,7 +58,7 @@ export function ModelsExplorer() {
   const sol = models.find((m) => m.id === "gpt-6.1-sol")!;
 
   const head = (key: typeof sort.key, label: string) => (
-    <th scope="col" aria-sort={sort.key === key ? (sort.dir === 1 ? "ascending" : "descending") : "none"} className="px-3 py-2.5 text-right font-medium">
+    <th scope="col" aria-sort={sort.key === key ? (sort.dir === 1 ? "ascending" : "descending") : "none"} className="px-3 py-3 text-right font-normal">
       <button type="button" className="hover:text-ink" onClick={() => setSort((s) => (s.key === key ? { key, dir: (s.dir * -1) as 1 | -1 } : { key, dir: key === "index" || key === "tokensPerSec" ? -1 : 1 }))}>
         {label} {sort.key === key ? (sort.dir === 1 ? "↑" : "↓") : ""}
       </button>
@@ -72,8 +73,8 @@ export function ModelsExplorer() {
         <Stat label="Cost per task ratio" value={`${(opus.aaCostPerTask! / sol.aaCostPerTask!).toFixed(1)}x`} sub="Opus 5.5 vs GPT-6.1 Sol, for 58 vs 52 on the index" />
       </section>
 
-      <section className="card p-4 sm:p-5" aria-labelledby="scatter">
-        <SectionHeading id="scatter" title="Intelligence vs cost per task">
+      <section className="card p-4 sm:p-6" aria-labelledby="scatter">
+        <SectionHeading id="scatter" eyebrow="Intelligence vs cost" title="Intelligence vs cost per task">
           Artificial Analysis Intelligence Index against what it costs to run their benchmark suite on that model. Up and to the left is better.
         </SectionHeading>
         <div className="mb-3">
@@ -105,7 +106,7 @@ export function ModelsExplorer() {
       </section>
 
       <section aria-labelledby="table">
-        <SectionHeading id="table" title="Leaderboard data">
+        <SectionHeading id="table" eyebrow="Data" title="Model leaderboard">
           Source: Artificial Analysis LLM leaderboard, fetched 2026-10-08. &quot;All-in $/1M out&quot; is this site&apos;s reference agentic workload priced at the model&apos;s list prices (see Methodology); shown only where list prices are known.
         </SectionHeading>
         <label className="mb-2 block">
@@ -121,10 +122,10 @@ export function ModelsExplorer() {
         <div className="card max-h-[560px] overflow-auto">
           <table className="w-full min-w-[640px] border-collapse text-sm">
             <caption className="sr-only">Model intelligence, cost and speed</caption>
-            <thead className="sticky top-0 bg-surface text-xs text-ink-3">
+            <thead className="eyebrow sticky top-0 bg-surface-2">
               <tr className="border-b border-line">
-                <th scope="col" className="px-3 py-2.5 text-left font-medium">Model</th>
-                <th scope="col" className="px-3 py-2.5 text-left font-medium">Lab</th>
+                <th scope="col" className="px-3 py-3 text-left font-normal">Model</th>
+                <th scope="col" className="px-3 py-3 text-left font-normal">Lab</th>
                 {head("index", "Intelligence")}
                 {head("costPerTask", "Cost / task")}
                 {head("tokensPerSec", "Tokens/s")}
@@ -135,7 +136,7 @@ export function ModelsExplorer() {
               {shown.map((r) => (
                 <tr key={r.name} className="border-b border-line last:border-0 hover:bg-surface-2/60">
                   <th scope="row" className="px-3 py-2 text-left font-normal">{r.name}</th>
-                  <td className="px-3 py-2 text-ink-2">{r.creator}</td>
+                  <td className="px-3 py-2 text-ink-2"><span className="inline-flex items-center gap-2"><span className="text-ink"><CreatorLogo creator={r.creator} size={15} /></span>{r.creator}</span></td>
                   <td className="num px-3 py-2 text-right font-medium">{r.index}</td>
                   <td className="num px-3 py-2 text-right">{r.costPerTask != null ? usd(r.costPerTask) : "n/a"}</td>
                   <td className="num px-3 py-2 text-right">{r.tokensPerSec ?? "n/a"}</td>

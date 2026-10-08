@@ -21,7 +21,7 @@ export function Controls() {
       aria-expanded={open}
       aria-controls="filter-panel"
       onClick={() => setOpen((o) => !o)}
-      className="inline-flex items-center gap-2 self-start rounded-lg border border-line bg-surface px-3.5 py-2 text-sm font-medium hover:border-ink-3"
+      className="btn btn-secondary corners self-start !gap-2"
     >
       <svg aria-hidden width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
         <path d="M2 4h12M4.5 8h7M7 12h2" />
@@ -36,7 +36,7 @@ export function Controls() {
     return (
       <div className="flex flex-wrap items-center gap-3">
         {toggle}
-        <p className="text-xs text-ink-3">
+        <p className="font-mono text-[11px] text-ink-3">
           {settings.scenario === "high" ? "Assuming you use your full plan allowance" : settings.scenario === "mid" ? "Assuming typical use" : "Assuming light use"}
           {settings.basisFilter === "published" ? " · published plans only" : ""}
         </p>
@@ -47,10 +47,10 @@ export function Controls() {
   return (
     <div className="flex flex-col gap-3">
     {toggle}
-    <section id="filter-panel" aria-label="Filters and assumptions" className="card grid gap-5 p-4 sm:p-5 lg:grid-cols-[auto_1fr]">
+    <section id="filter-panel" aria-label="Filters and assumptions" className="card corners grid gap-5 p-4 sm:p-6 lg:grid-cols-[auto_1fr]">
       <div className="flex flex-col gap-4">
         <div>
-          <div className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ink-3">Assumed usage</div>
+          <div className="mb-1.5 eyebrow">Assumed usage</div>
           <Segmented
             label="Usage scenario"
             value={settings.scenario}
@@ -66,7 +66,7 @@ export function Controls() {
           </p>
         </div>
         <div>
-          <div className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ink-3">Show</div>
+          <div className="mb-1.5 eyebrow">Show</div>
           <Segmented
             label="Data basis"
             value={settings.basisFilter}
@@ -81,7 +81,7 @@ export function Controls() {
 
       <div className="grid gap-5">
         <fieldset>
-          <legend className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ink-3">Composite score weights</legend>
+          <legend className="mb-1.5 eyebrow">Composite score weights</legend>
           <div className="flex flex-col gap-2">
             {WEIGHTS.map((w) => (
               <label key={w.key} className="grid grid-cols-[6.5rem_1fr_2rem] items-center gap-2 text-[13px]" title={w.hint}>

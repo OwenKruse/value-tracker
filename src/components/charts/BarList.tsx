@@ -11,6 +11,8 @@ export interface BarRow {
   valueLabel: string;
   /** CSS color (var(--vN)) identifying the entity, never its rank. */
   color: string;
+  /** Optional leading icon next to the label. */
+  icon?: React.ReactNode;
   /** Hatched fill marks estimated values (texture as a second channel). */
   hatched?: boolean;
   tooltip?: string;
@@ -48,7 +50,10 @@ export function BarList({
             title={r.tooltip}
           >
             <div className="min-w-0 text-right leading-tight">
-              <div className={`truncate text-[13px] ${active ? "font-medium text-ink" : "text-ink"}`}>{r.label}</div>
+              <div className={`flex items-center justify-end gap-1.5 text-[13px] ${active ? "font-medium text-ink" : "text-ink"}`}>
+                {r.icon}
+                <span className="truncate">{r.label}</span>
+              </div>
               {r.sublabel && <div className="truncate text-[11px] text-ink-3">{r.sublabel}</div>}
             </div>
             <div className="relative h-5">
