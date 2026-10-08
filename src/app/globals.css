@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --bg: #f6f6f3;
+  --surface: #fcfcfb;
+  --surface-2: #f0efec;
+  --line: #e3e2dc;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --ink-3: #75746f;
+  --accent: #2a78d6;
+  --accent-ink: #184f95;
+  --grid: #e8e7e2;
+
+  /* series: published vs estimated */
+  --s-published: #2a78d6;
+  --s-estimated: #eb6834;
+
+  /* vendors, fixed order from the validated categorical palette */
+  --v1: #2a78d6;
+  --v2: #eb6834;
+  --v3: #1baf7a;
+  --v4: #eda100;
+  --v5: #e87ba4;
+  --v6: #008300;
+  --v7: #4a3aa7;
+  --v8: #e34948;
+
+  --good: #006300;
+  --warn: #8a5a00;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --bg: #121211;
+    --surface: #1a1a19;
+    --surface-2: #232321;
+    --line: #2e2e2b;
+    --ink: #f4f4f0;
+    --ink-2: #c3c2b7;
+    --ink-3: #8f8e86;
+    --accent: #3987e5;
+    --accent-ink: #86b6ef;
+    --grid: #2a2a27;
+    --s-published: #3987e5;
+    --s-estimated: #d95926;
+    --v1: #3987e5;
+    --v2: #d95926;
+    --v3: #199e70;
+    --v4: #c98500;
+    --v5: #d55181;
+    --v6: #008300;
+    --v7: #9085e9;
+    --v8: #e66767;
+    --good: #5fd35f;
+    --warn: #f0b64a;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121211;
+  --surface: #1a1a19;
+  --surface-2: #232321;
+  --line: #2e2e2b;
+  --ink: #f4f4f0;
+  --ink-2: #c3c2b7;
+  --ink-3: #8f8e86;
+  --accent: #3987e5;
+  --accent-ink: #86b6ef;
+  --grid: #2a2a27;
+  --s-published: #3987e5;
+  --s-estimated: #d95926;
+  --v1: #3987e5;
+  --v2: #d95926;
+  --v3: #199e70;
+  --v4: #c98500;
+  --v5: #d55181;
+  --v6: #008300;
+  --v7: #9085e9;
+  --v8: #e66767;
+  --good: #5fd35f;
+  --warn: #f0b64a;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+input[type="range"] {
+  accent-color: var(--accent);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}

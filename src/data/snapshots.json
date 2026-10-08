@@ -1,0 +1,145 @@
+[
+  {
+    "date": "2026-10-08",
+    "plans": {
+      "claude-pro": {
+        "price": 20,
+        "low": 60,
+        "mid": 120,
+        "high": 250
+      },
+      "claude-max-5x": {
+        "price": 100,
+        "low": 350,
+        "mid": 700,
+        "high": 1500
+      },
+      "claude-max-20x": {
+        "price": 200,
+        "low": 1000,
+        "mid": 2200,
+        "high": 5000
+      },
+      "chatgpt-go": {
+        "price": 8,
+        "low": 10,
+        "mid": 20,
+        "high": 40
+      },
+      "chatgpt-plus": {
+        "price": 20,
+        "low": 50,
+        "mid": 120,
+        "high": 250
+      },
+      "chatgpt-pro-100": {
+        "price": 100,
+        "low": 300,
+        "mid": 700,
+        "high": 1500
+      },
+      "chatgpt-pro-200": {
+        "price": 200,
+        "low": 800,
+        "mid": 2000,
+        "high": 4500
+      },
+      "chatgpt-pro-500": {
+        "price": 500,
+        "low": 2000,
+        "mid": 5000,
+        "high": 10000
+      },
+      "cursor-pro": {
+        "price": 20,
+        "low": 20,
+        "mid": 20,
+        "high": 30
+      },
+      "cursor-pro-plus": {
+        "price": 60,
+        "low": 70,
+        "mid": 70,
+        "high": 105
+      },
+      "cursor-ultra": {
+        "price": 200,
+        "low": 400,
+        "mid": 400,
+        "high": 600
+      },
+      "copilot-pro": {
+        "price": 10,
+        "low": 15,
+        "mid": 15,
+        "high": 15
+      },
+      "copilot-pro-plus": {
+        "price": 39,
+        "low": 70,
+        "mid": 70,
+        "high": 70
+      },
+      "copilot-max": {
+        "price": 100,
+        "low": 200,
+        "mid": 200,
+        "high": 200
+      },
+      "kiro-pro": {
+        "price": 20,
+        "low": 40,
+        "mid": 40,
+        "high": 40
+      },
+      "kiro-pro-plus": {
+        "price": 40,
+        "low": 80,
+        "mid": 80,
+        "high": 80
+      },
+      "kiro-pro-max": {
+        "price": 100,
+        "low": 200,
+        "mid": 200,
+        "high": 200
+      },
+      "kiro-power": {
+        "price": 200,
+        "low": 400,
+        "mid": 400,
+        "high": 400
+      },
+      "devin-pro": {
+        "price": 20,
+        "low": 30,
+        "mid": 60,
+        "high": 120
+      },
+      "devin-max": {
+        "price": 200,
+        "low": 300,
+        "mid": 700,
+        "high": 1400
+      },
+      "zed-pro": {
+        "price": 10,
+        "low": 4.55,
+        "mid": 4.55,
+        "high": 4.55
+      },
+      "google-ai-pro": {
+        "price": 19.99,
+        "low": 20,
+        "mid": 40,
+        "high": 80
+      },
+      "google-ai-ultra": {
+        "price": 249.99,
+        "low": 250,
+        "mid": 600,
+        "high": 1500
+      }
+    }
+  }
+]

@@ -1,0 +1,201 @@
+{
+  "asOf": "2026-10-08",
+  "plans": [
+    {
+      "id": "claude-pro", "vendorId": "anthropic", "name": "Claude Pro", "price": 20,
+      "apiValue": { "low": 60, "mid": 120, "high": 250 }, "basis": "estimated", "confidence": "low",
+      "topModelId": "opus-5.5",
+      "limits": "5-hour session limit + weekly limit; Opus and Sonnet in Claude Code. Fable only via usage credits.",
+      "note": "$17/mo if billed annually. Anthropic does not publish token or dollar allotments, only multiples (Max = 5x / 20x Pro).",
+      "sourceUrl": "https://claude.com/pricing"
+    },
+    {
+      "id": "claude-max-5x", "vendorId": "anthropic", "name": "Claude Max 5x", "price": 100,
+      "apiValue": { "low": 350, "mid": 700, "high": 1500 }, "basis": "estimated", "confidence": "low",
+      "topModelId": "opus-5.5",
+      "limits": "5x Pro per-session allowance + weekly cap. Fable at 50% of weekly limits. Priority access at peak.",
+      "note": "Also includes monthly API credits (amount not verified, not counted here).",
+      "sourceUrl": "https://support.claude.com/en/articles/11049741-what-is-the-max-plan"
+    },
+    {
+      "id": "claude-max-20x", "vendorId": "anthropic", "name": "Claude Max 20x", "price": 200,
+      "apiValue": { "low": 1000, "mid": 2200, "high": 5000 }, "basis": "estimated", "confidence": "low",
+      "topModelId": "opus-5.5",
+      "limits": "20x Pro per-session allowance + weekly cap. Fable at 50% of weekly limits. Priority access at peak.",
+      "note": "Widest uncertainty of any plan here: heavy agentic users report far more API-equivalent usage than light users. Use the override box with your own numbers.",
+      "sourceUrl": "https://support.claude.com/en/articles/11049741-what-is-the-max-plan"
+    },
+
+    {
+      "id": "chatgpt-go", "vendorId": "openai", "name": "ChatGPT Go", "price": 8,
+      "apiValue": { "low": 10, "mid": 20, "high": 40 }, "basis": "estimated", "confidence": "low",
+      "topModelId": "gpt-6-luna",
+      "limits": "GPT-6 Luna at Standard speed in the desktop app (subject to rollout).",
+      "note": "Lightweight coding tier. Cheap model, so dollars stretch far in tokens but not in intelligence.",
+      "sourceUrl": "https://learn.chatgpt.com/docs/pricing"
+    },
+    {
+      "id": "chatgpt-plus", "vendorId": "openai", "name": "ChatGPT Plus (Codex)", "price": 20,
+      "apiValue": { "low": 50, "mid": 120, "high": 250 }, "basis": "estimated", "confidence": "low",
+      "topModelId": "gpt-6-astra",
+      "limits": "Local messages per 5h: Astra 5-45, GPT-6.1 Sol 15-160, Luna 350-3,000. Weekly limits may apply. Buy credits to extend.",
+      "note": "OpenAI states message ranges, not dollars. Estimate assumes mostly GPT-6.1 Sol usage at typical agentic task sizes (2-15 credits per task).",
+      "sourceUrl": "https://learn.chatgpt.com/docs/pricing"
+    },
+    {
+      "id": "chatgpt-pro-100", "vendorId": "openai", "name": "ChatGPT Pro $100", "price": 100,
+      "apiValue": { "low": 300, "mid": 700, "high": 1500 }, "basis": "estimated", "confidence": "low",
+      "topModelId": "gpt-6-astra",
+      "limits": "Pro plans currently have no 5-hour limit; weekly limits apply. Higher multiples of Plus.",
+      "note": "OpenAI does not publish the Pro multiples on the pricing page; estimate scales from Plus.",
+      "sourceUrl": "https://learn.chatgpt.com/docs/pricing"
+    },
+    {
+      "id": "chatgpt-pro-200", "vendorId": "openai", "name": "ChatGPT Pro $200", "price": 200,
+      "apiValue": { "low": 800, "mid": 2000, "high": 4500 }, "basis": "estimated", "confidence": "low",
+      "topModelId": "gpt-6-astra",
+      "limits": "No 5-hour limit; weekly limits apply.",
+      "note": "Estimate scales from Plus; see methodology.",
+      "sourceUrl": "https://learn.chatgpt.com/docs/pricing"
+    },
+    {
+      "id": "chatgpt-pro-500", "vendorId": "openai", "name": "ChatGPT Pro $500", "price": 500,
+      "apiValue": { "low": 2000, "mid": 5000, "high": 10000 }, "basis": "estimated", "confidence": "low",
+      "topModelId": "gpt-6-astra",
+      "limits": "Adds Ultrafast mode (burns included usage at 8x Standard for Astra / Sol).",
+      "note": "Ultrafast consumes allowance faster, so tokens per dollar at Ultrafast are lower than the headline.",
+      "sourceUrl": "https://learn.chatgpt.com/docs/pricing"
+    },
+
+    {
+      "id": "cursor-pro", "vendorId": "cursor", "name": "Cursor Pro", "price": 20,
+      "apiValue": { "low": 20, "mid": 20, "high": 30 }, "basis": "estimated", "confidence": "medium",
+      "topModelId": "opus-5.5",
+      "limits": "Two pools: Cursor Models (Grok, Composer; 'significantly more' usage) and Other Models (billed at API price). On-demand at API rates after.",
+      "note": "Cursor's page confirms price and pool structure but not the per-tier dollar amount. $20/$70/$400 follows Cursor's earlier published tiers; the 'high' case credits extra Cursor-Models-pool usage.",
+      "sourceUrl": "https://cursor.com/docs/models-and-pricing"
+    },
+    {
+      "id": "cursor-pro-plus", "vendorId": "cursor", "name": "Cursor Pro+", "price": 60,
+      "apiValue": { "low": 70, "mid": 70, "high": 105 }, "basis": "estimated", "confidence": "medium",
+      "topModelId": "opus-5.5",
+      "limits": "Recommended by Cursor for daily agent users (typical total usage $60-$100/mo).",
+      "note": "See Cursor Pro note.",
+      "sourceUrl": "https://cursor.com/docs/models-and-pricing"
+    },
+    {
+      "id": "cursor-ultra", "vendorId": "cursor", "name": "Cursor Ultra", "price": 200,
+      "apiValue": { "low": 400, "mid": 400, "high": 600 }, "basis": "estimated", "confidence": "medium",
+      "topModelId": "opus-5.5",
+      "limits": "Recommended for agent power users (often $200+/mo total usage).",
+      "note": "See Cursor Pro note.",
+      "sourceUrl": "https://cursor.com/docs/models-and-pricing"
+    },
+
+    {
+      "id": "copilot-pro", "vendorId": "github", "name": "Copilot Pro", "price": 10,
+      "apiValue": { "low": 15, "mid": 15, "high": 15 }, "basis": "published", "confidence": "high",
+      "topModelId": "opus-5.5",
+      "limits": "$15 of GitHub AI Credits ($10 base + $5 flex). 1 credit = $0.01. Completions unlimited and free of credits.",
+      "note": "Flex allotment may change over time. Extra usage billed at $0.01/credit.",
+      "sourceUrl": "https://github.com/features/copilot/plans"
+    },
+    {
+      "id": "copilot-pro-plus", "vendorId": "github", "name": "Copilot Pro+", "price": 39,
+      "apiValue": { "low": 70, "mid": 70, "high": 70 }, "basis": "published", "confidence": "high",
+      "topModelId": "opus-5.5",
+      "limits": "$70 of GitHub AI Credits ($39 base + $31 flex). Adds Claude Fable models.",
+      "note": "Flex allotment may change over time.",
+      "sourceUrl": "https://github.com/features/copilot/plans"
+    },
+    {
+      "id": "copilot-max", "vendorId": "github", "name": "Copilot Max", "price": 100,
+      "apiValue": { "low": 200, "mid": 200, "high": 200 }, "basis": "published", "confidence": "high",
+      "topModelId": "opus-5.5",
+      "limits": "$200 of GitHub AI Credits ($100 base + $100 flex). Built for sustained agent-driven workflows.",
+      "note": "Flex allotment may change over time.",
+      "sourceUrl": "https://github.com/features/copilot/plans"
+    },
+
+    {
+      "id": "kiro-pro", "vendorId": "kiro", "name": "Kiro Pro", "price": 20,
+      "apiValue": { "low": 40, "mid": 40, "high": 40 }, "basis": "published", "confidence": "medium",
+      "topModelId": null,
+      "limits": "1,000 credits/mo; add-on credits $0.04 each. Valued at the add-on rate.",
+      "note": "Credit-to-token mapping is not published, so value is measured at Kiro's own retail credit price. Models: Auto, Claude Sonnet 5 / Opus 5, GPT-5.6, open-weight models.",
+      "sourceUrl": "https://kiro.dev/pricing"
+    },
+    {
+      "id": "kiro-pro-plus", "vendorId": "kiro", "name": "Kiro Pro+", "price": 40,
+      "apiValue": { "low": 80, "mid": 80, "high": 80 }, "basis": "published", "confidence": "medium",
+      "topModelId": null,
+      "limits": "2,000 credits/mo at $0.04 add-on rate.",
+      "note": "See Kiro Pro note.",
+      "sourceUrl": "https://kiro.dev/pricing"
+    },
+    {
+      "id": "kiro-pro-max", "vendorId": "kiro", "name": "Kiro Pro Max", "price": 100,
+      "apiValue": { "low": 200, "mid": 200, "high": 200 }, "basis": "published", "confidence": "medium",
+      "topModelId": null,
+      "limits": "5,000 credits/mo at $0.04 add-on rate.",
+      "note": "See Kiro Pro note.",
+      "sourceUrl": "https://kiro.dev/pricing"
+    },
+    {
+      "id": "kiro-power", "vendorId": "kiro", "name": "Kiro Power", "price": 200,
+      "apiValue": { "low": 400, "mid": 400, "high": 400 }, "basis": "published", "confidence": "medium",
+      "topModelId": null,
+      "limits": "10,000 credits/mo at $0.04 add-on rate.",
+      "note": "See Kiro Pro note.",
+      "sourceUrl": "https://kiro.dev/pricing"
+    },
+
+    {
+      "id": "devin-pro", "vendorId": "cognition", "name": "Devin / Windsurf Pro", "price": 20,
+      "apiValue": { "low": 30, "mid": 60, "high": 120 }, "basis": "estimated", "confidence": "low",
+      "topModelId": "opus-5.5",
+      "limits": "Quota refreshes daily and weekly; extra usage at API pricing. Frontier models from OpenAI, Claude, Gemini, SpaceXAI plus open-source.",
+      "note": "windsurf.com/pricing now serves the Devin pricing page (Cognition). Dollar value of the quota is not published.",
+      "sourceUrl": "https://devin.ai/pricing"
+    },
+    {
+      "id": "devin-max", "vendorId": "cognition", "name": "Devin / Windsurf Max", "price": 200,
+      "apiValue": { "low": 300, "mid": 700, "high": 1400 }, "basis": "estimated", "confidence": "low",
+      "topModelId": "opus-5.5",
+      "limits": "'Significantly higher quotas' than Pro; unlimited concurrent sessions.",
+      "note": "Dollar value of the quota is not published.",
+      "sourceUrl": "https://devin.ai/pricing"
+    },
+
+    {
+      "id": "zed-pro", "vendorId": "zed", "name": "Zed Pro", "price": 10,
+      "apiValue": { "low": 4.55, "mid": 4.55, "high": 4.55 }, "basis": "published", "confidence": "high",
+      "topModelId": null,
+      "limits": "$5 of tokens included; hosted usage billed at API list +10%. Unlimited edit predictions. Bring-your-own-keys is free on the Personal plan.",
+      "note": "$5 of hosted tokens at list+10% equals about $4.55 of API-list value. The rest of the $10 buys the editor's hosted services.",
+      "sourceUrl": "https://zed.dev/pricing"
+    },
+
+    {
+      "id": "google-ai-pro", "vendorId": "google", "name": "Google AI Pro", "price": 19.99,
+      "apiValue": { "low": 20, "mid": 40, "high": 80 }, "basis": "estimated", "confidence": "low",
+      "topModelId": "gemini-4-argon",
+      "limits": "Higher limits in Antigravity, Jules and AI Studio plus flexible AI credit pool. Bundle includes storage and other Google AI features. $10/mo of Google Cloud credits.",
+      "note": "Bundle plan: coding is one benefit among many. Intelligence assumes Antigravity serves the latest Gemini (AA lists Gemini 4 Argon).",
+      "sourceUrl": "https://antigravity.google/pricing"
+    },
+    {
+      "id": "google-ai-ultra", "vendorId": "google", "name": "Google AI Ultra", "price": 249.99,
+      "apiValue": { "low": 250, "mid": 600, "high": 1500 }, "basis": "estimated", "confidence": "low",
+      "topModelId": "gemini-4-argon",
+      "limits": "'Up to 20x' Gemini access; even higher Antigravity and Jules limits; $40/mo Google Cloud credits.",
+      "note": "The fetched Google page did not render the Ultra price; $249.99 is the last known list price. Verify before relying on it.",
+      "sourceUrl": "https://one.google.com/about/google-ai-plans/"
+    }
+  ],
+  "watchlist": [
+    { "name": "Z.ai GLM Coding Plan", "model": "GLM-5.3 (AA 45)", "why": "Pricing page is rendered client-side and could not be read, so no plan price is scored. Models are very strong for the price per AA data.", "url": "https://z.ai/subscribe" },
+    { "name": "Kimi Code", "model": "Kimi K3 (AA 44)", "why": "Plan tiers and prices are behind a client-rendered page (in Chinese); not verified.", "url": "https://www.kimi.com/code" },
+    { "name": "Zed / BYOK and Claude Code API keys", "model": "any", "why": "Pay-as-you-go API use is the 1.0x baseline every plan is compared against.", "url": "https://platform.claude.com/docs/en/about-claude/pricing" }
+  ]
+}

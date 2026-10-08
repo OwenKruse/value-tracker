@@ -1,0 +1,51 @@
+{
+  "disclaimer": "Entries marked 'fetched' were read from vendor pages on 2026-10-08. Entries marked 'recalled' come from vendor announcements and press coverage and were not re-verified in this build. Check the vendor before relying on a date.",
+  "events": [
+    { "date": "2024-12-05", "precision": "day", "vendorId": "openai", "title": "ChatGPT Pro launches at $200/mo", "detail": "First flat-rate tier priced for heavy users; the template for 'unlimited-ish' power plans.", "provenance": "recalled" },
+    { "date": "2025-04-09", "precision": "day", "vendorId": "anthropic", "title": "Claude Max launches ($100 for 5x, $200 for 20x)", "detail": "Brings Claude Code onto flat-rate plans and sets the $100 / $200 ladder everyone copies.", "provenance": "recalled" },
+    { "date": "2025-05-16", "precision": "day", "vendorId": "openai", "title": "Codex arrives in ChatGPT", "detail": "Coding agent rolls out to paid ChatGPT tiers; now included from Free through Enterprise.", "provenance": "recalled" },
+    { "date": "2025-06-16", "precision": "day", "vendorId": "cursor", "title": "Cursor moves to usage-based Pro and launches Ultra", "detail": "500 'fast requests' become $20 of API-priced usage; Ultra ($200) adds roughly 20x Pro.", "provenance": "recalled" },
+    { "date": "2025-06-18", "precision": "day", "vendorId": "github", "title": "Copilot premium-request limits enforced", "detail": "Pro 300 / Pro+ 1,500 premium requests per month, $0.04 each beyond that.", "provenance": "recalled" },
+    { "date": "2025-08-28", "precision": "day", "vendorId": "anthropic", "title": "Weekly limits added to Pro and Max", "detail": "On top of the 5-hour session limit, to curb continuous background use.", "provenance": "recalled" },
+    { "date": "2025-11-24", "precision": "day", "vendorId": "anthropic", "title": "Opus list price falls 3x ($15/$75 to $5/$25)", "detail": "Opus 4.5 resets the price of the top Claude tier; later Opus 5.5 trims it to $4/$20.", "provenance": "recalled" },
+    { "date": "2026", "precision": "year", "vendorId": "github", "title": "Copilot switches to GitHub AI Credits and adds a $100 Max tier", "detail": "Pro now $10 for $15 of credits, Pro+ $39 for $70, Max $100 for $200.", "provenance": "fetched" },
+    { "date": "2026", "precision": "year", "vendorId": "openai", "title": "ChatGPT adds Go ($8) and splits Pro into $100 / $200 / $500", "detail": "Pro $500 adds Ultrafast mode; Plus publishes per-5-hour message ranges.", "provenance": "fetched" },
+    { "date": "2026", "precision": "year", "vendorId": "cognition", "title": "Windsurf pricing folds into Devin (Cognition)", "detail": "windsurf.com/pricing now serves the Devin page: Pro $20, Max $200.", "provenance": "fetched" },
+    { "date": "2026", "precision": "year", "vendorId": "kiro", "title": "Kiro ships a four-step credit ladder to $200", "detail": "Pro $20, Pro+ $40, Pro Max $100, Power $200 at $0.04 per add-on credit.", "provenance": "fetched" },
+    { "date": "2026", "precision": "year", "vendorId": "cursor", "title": "Cursor splits usage into Cursor Models and Other Models pools", "detail": "Pro $20, Pro+ $60, Ultra $200; Start plan launches in India at 649 INR.", "provenance": "fetched" },
+    { "date": "2026-10-14", "precision": "day", "vendorId": "openai", "title": "Upcoming: GPT-5.5 retires from ChatGPT and Codex", "detail": "API unaffected.", "provenance": "fetched", "upcoming": true },
+    { "date": "2026-10-16", "precision": "day", "vendorId": "cognition", "title": "Upcoming: free SWE-2 promo ends in Devin Desktop and CLI", "detail": "", "provenance": "fetched", "upcoming": true },
+    { "date": "2026-11-21", "precision": "day", "vendorId": "openai", "title": "Upcoming: GPT-5.6 Sol promotional pricing ends (at the earliest)", "detail": "Promo runs 'at least through' this date.", "provenance": "fetched", "upcoming": true }
+  ],
+  "valueHistory": [
+    { "planId": "copilot-pro", "points": [
+      { "date": "2025-06-18", "price": 10, "apiValue": 12, "note": "300 premium requests x $0.04 overage rate", "provenance": "recalled" },
+      { "date": "2026-10-08", "price": 10, "apiValue": 15, "note": "$15 of GitHub AI Credits", "provenance": "fetched" }
+    ]},
+    { "planId": "copilot-pro-plus", "points": [
+      { "date": "2025-06-18", "price": 39, "apiValue": 60, "note": "1,500 premium requests x $0.04", "provenance": "recalled" },
+      { "date": "2026-10-08", "price": 39, "apiValue": 70, "note": "$70 of GitHub AI Credits", "provenance": "fetched" }
+    ]},
+    { "planId": "cursor-ultra", "points": [
+      { "date": "2025-06-16", "price": 200, "apiValue": 400, "note": "Ultra launch, about 20x Pro", "provenance": "recalled" },
+      { "date": "2026-10-08", "price": 200, "apiValue": 400, "note": "Assumed unchanged; page does not state the amount", "provenance": "estimated" }
+    ]}
+  ],
+  "generations": [
+    { "family": "Opus", "steps": [
+      { "label": "Opus 4 / 4.1", "input": 15, "output": 75, "cacheRead": 1.5, "cacheWrite": 18.75, "when": "mid-2025" },
+      { "label": "Opus 4.5 to 5", "input": 5, "output": 25, "cacheRead": 0.5, "cacheWrite": 6.25, "when": "Nov 2025 onward" },
+      { "label": "Opus 5.5", "input": 4, "output": 20, "cacheRead": 0.2, "cacheWrite": 5, "when": "2026" }
+    ]},
+    { "family": "Sonnet", "steps": [
+      { "label": "Sonnet 4 to 4.6", "input": 3, "output": 15, "cacheRead": 0.3, "cacheWrite": 3.75, "when": "2025 to early 2026" },
+      { "label": "Sonnet 5", "input": 2, "output": 10, "cacheRead": 0.2, "cacheWrite": 2.5, "when": "2026" },
+      { "label": "Sonnet 5.5", "input": 2, "output": 10, "cacheRead": 0.1, "cacheWrite": 2.5, "when": "2026" }
+    ]},
+    { "family": "Haiku", "steps": [
+      { "label": "Haiku 3.5", "input": 0.8, "output": 4, "cacheRead": 0.08, "cacheWrite": 1, "when": "2024" },
+      { "label": "Haiku 4.5", "input": 1, "output": 5, "cacheRead": 0.1, "cacheWrite": 1.25, "when": "late 2025" },
+      { "label": "Haiku 5.5", "input": 0.1, "output": 0.5, "cacheRead": 0.01, "cacheWrite": 0.125, "when": "2026" }
+    ]}
+  ]
+}
