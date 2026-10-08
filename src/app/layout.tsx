@@ -11,7 +11,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: { default: "Value Tracker: AI coding plans vs API cost", template: "%s | Value Tracker" },
+  title: { default: "CodingPlans: AI coding plans vs API cost", template: "%s | CodingPlans" },
   description:
     "Compare Claude, Codex, Cursor, GitHub Copilot and other AI coding subscriptions by API-equivalent output per dollar, intelligence and capacity.",
 };

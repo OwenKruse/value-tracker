@@ -19,7 +19,7 @@ export function SiteNav() {
           <span aria-hidden className="grid h-6 w-6 place-items-center rounded-md bg-accent text-[13px] font-bold text-white">
             $
           </span>
-          Value Tracker
+          CodingPlans
         </Link>
         <nav aria-label="Primary" className="-mr-2 flex gap-1 overflow-x-auto text-sm">
           {links.map((l) => {

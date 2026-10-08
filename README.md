@@ -1,4 +1,4 @@
-# Value Tracker
+# CodingPlans
 
 Compares AI coding subscriptions (Claude, ChatGPT/Codex, Cursor, GitHub Copilot, Devin/Windsurf, Kiro, Zed, Google Antigravity) by
 how much API-equivalent usage each plan buys per dollar, how many output tokens that is, and how smart the models are.
