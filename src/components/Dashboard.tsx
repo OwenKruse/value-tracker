@@ -8,14 +8,13 @@ import { Controls } from "./Controls";
 import { PlanTable } from "./PlanTable";
 import { useSettings } from "./SettingsProvider";
 import { SectionHeading, Stat, VendorDot, vendorColor } from "./ui";
-import { modelById, plansForVendor, vendors, watchlist } from "@/lib/data";
+import { plansForVendor, vendors, watchlist } from "@/lib/data";
 import { mult, tokensM, usd } from "@/lib/format";
 import { computeMetrics } from "@/lib/metrics";
 
 export function Dashboard() {
   const { settings } = useSettings();
   const rows = useMemo(() => computeMetrics(settings), [settings]);
-  const ref = modelById(settings.refModelId);
 
   const byMultiple = useMemo(() => [...rows].sort((a, b) => b.multiple - a.multiple), [rows]);
   const byTokens = useMemo(() => [...rows].sort((a, b) => b.outputTokensM - a.outputTokensM), [rows]);
@@ -26,7 +25,6 @@ export function Dashboard() {
   );
 
   const tag = (r: (typeof rows)[number]) => (r.plan.basis === "estimated" && !r.overridden ? " · estimate" : "");
-  const nEstimated = rows.filter((r) => r.plan.basis === "estimated" && !r.overridden).length;
 
   const bars: BarRow[] = byMultiple.map((r) => ({
     id: r.plan.id,
@@ -76,22 +74,10 @@ export function Dashboard() {
       {rows.length > 0 && (
         <section aria-label="Highlights" className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <Stat label="Biggest subsidy" value={mult(byMultiple[0].multiple)} sub={`${byMultiple[0].plan.name} · ${usd(byMultiple[0].plan.price)}/mo${tag(byMultiple[0])}`} />
-          <Stat label="Most output tokens" value={`${tokensM(byTokens[0].outputTokensM)}/mo`} sub={`${byTokens[0].plan.name} on ${ref?.name}${tag(byTokens[0])}`} />
+          <Stat label="Most output tokens" value={`${tokensM(byTokens[0].outputTokensM)}/mo`} sub={`${byTokens[0].plan.name} on ${byTokens[0].tokenModel.name}${byTokens[0].tokenModelAssumed ? " (assumed)" : ""}${tag(byTokens[0])}`} />
           <Stat label="Smartest model access" value={bySmart[0] ? String(bySmart[0].intel) : "n/a"} sub={bySmart[0] ? `${bySmart[0].topModel?.name} · cheapest: ${bySmart[0].plan.name}` : ""} />
           <Stat label="Best composite" value={byScore[0].score.toFixed(0)} sub={`${byScore[0].plan.name} · ${usd(byScore[0].plan.price)}/mo${tag(byScore[0])}`} />
         </section>
-      )}
-
-      {nEstimated > 0 && (
-        <aside role="note" className="flex gap-3 rounded-xl border border-dashed border-ink-3 bg-surface p-4 text-sm text-ink-2">
-          <span aria-hidden className="mt-0.5 text-base" style={{ color: "var(--warn)" }}>▲</span>
-          <p>
-            <strong className="text-ink">{nEstimated} of {rows.length} plans use my estimates, not vendor numbers.</strong>{" "}
-            Anthropic, OpenAI, Cognition and Google do not publish the dollar value of included usage, so the top of this
-            ranking is driven by assumptions. Flip to <em>Published only</em>, overwrite a value with your own usage data, or
-            read <Link href="/methodology" className="underline underline-offset-2 hover:text-ink">how the estimates were made</Link>.
-          </p>
-        </aside>
       )}
 
       <Controls />

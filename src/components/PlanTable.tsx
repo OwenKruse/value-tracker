@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useSettings } from "./SettingsProvider";
-import { BasisBadge, VendorDot } from "./ui";
+import { VendorDot } from "./ui";
 import { mult, r2, tokensM, usd } from "@/lib/format";
 import type { PlanMetrics } from "@/lib/types";
 
@@ -13,8 +13,8 @@ const COLS: { key: SortKey; label: string; hint: string; align?: "right" }[] = [
   { key: "price", label: "Price/mo", hint: "Month-to-month list price in USD", align: "right" },
   { key: "apiValue", label: "API value", hint: "Dollar value of included usage at API list prices. Click a value to enter your own.", align: "right" },
   { key: "multiple", label: "Value ×", hint: "API value ÷ price. 1.0x means no subsidy.", align: "right" },
-  { key: "outputTokensM", label: "Output tok/mo", hint: "Output tokens that dollar value buys on the reference model, including the cached context re-read", align: "right" },
-  { key: "costPerMOut", label: "$ / 1M out", hint: "Effective plan cost per 1M output tokens on the reference model", align: "right" },
+  { key: "outputTokensM", label: "Output tok/mo", hint: "Output tokens that dollar value buys on the plan's best model (shown under the plan name), including the cached context re-read", align: "right" },
+  { key: "costPerMOut", label: "$ / 1M out", hint: "Effective plan cost per 1M output tokens on the plan's best model", align: "right" },
   { key: "intel", label: "Intel", hint: "Artificial Analysis Intelligence Index of the best model on the plan", align: "right" },
   { key: "score", label: "Score", hint: "Weighted composite, 0 to 100", align: "right" },
 ];
@@ -91,7 +91,7 @@ export function PlanTable({ rows }: { rows: PlanMetrics[] }) {
 
   return (
     <div className="card overflow-x-auto">
-      <table className="w-full min-w-[860px] border-collapse text-sm">
+      <table className="w-full min-w-[760px] border-collapse text-sm">
         <caption className="sr-only">AI coding plans ranked by composite value score. Column headers sort the table.</caption>
         <thead>
           <tr className="border-b border-line text-left text-xs text-ink-3">
@@ -112,7 +112,6 @@ export function PlanTable({ rows }: { rows: PlanMetrics[] }) {
                 </th>
               );
             })}
-            <th scope="col" className="px-3 py-2.5 font-medium">Basis</th>
           </tr>
         </thead>
         <tbody>
@@ -123,7 +122,10 @@ export function PlanTable({ rows }: { rows: PlanMetrics[] }) {
                   <VendorDot vendor={r.vendor} />
                   <span>
                     <span className="block font-medium text-ink group-hover:underline">{r.plan.name}</span>
-                    <span className="block text-[11px] text-ink-3">{r.topModel ? r.topModel.name : "model menu varies"}</span>
+                    <span className="block text-[11px] text-ink-3">
+                      {r.topModel ? r.topModel.name : "model menu varies"}
+                      {r.tokenModelAssumed && <span title="This plan's best model has no known API price, so tokens are priced as if on Claude Sonnet 5.5"> · tokens at {r.tokenModel.name} (assumed)</span>}
+                    </span>
                   </span>
                 </Link>
               </th>
@@ -141,7 +143,6 @@ export function PlanTable({ rows }: { rows: PlanMetrics[] }) {
                   <span className="num w-7 text-right font-medium">{r.score.toFixed(0)}</span>
                 </div>
               </td>
-              <td className="px-3 py-2.5"><BasisBadge basis={r.plan.basis} confidence={r.plan.confidence} /></td>
             </tr>
           ))}
         </tbody>

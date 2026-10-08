@@ -92,8 +92,8 @@ export default function MethodologyPage() {
           </table>
         </div>
         <p>
-          Output tokens per month = API value ÷ all-in cost per 1M output tokens of the reference model you pick on the
-          Overview. The ratio is a workload assumption, not a measurement; change it in <Code>src/lib/metrics.ts</Code>.
+          Output tokens per month = API value ÷ all-in cost per 1M output tokens of the best model on that plan (the one
+          shown under the plan name). Kiro uses Claude Opus 5; Zed and Google, whose models have no known API price, are priced as if on Claude Sonnet 5.5 and marked assumed. The ratio is a workload assumption, not a measurement; change it in <Code>src/lib/metrics.ts</Code>.
         </p>
       </section>
 

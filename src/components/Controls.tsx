@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { useSettings } from "./SettingsProvider";
 import { Segmented } from "./ui";
-import { allInCostPerMOut, referenceModels } from "@/lib/metrics";
-import { usd } from "@/lib/format";
 import type { Weights } from "@/lib/types";
 
 const WEIGHTS: { key: keyof Weights; label: string; hint: string }[] = [
@@ -15,7 +13,6 @@ const WEIGHTS: { key: keyof Weights; label: string; hint: string }[] = [
 
 export function Controls() {
   const { settings, update, reset, isCustomised } = useSettings();
-  const ref = referenceModels.find((m) => m.id === settings.refModelId);
   const [open, setOpen] = useState(false);
 
   const toggle = (
@@ -41,7 +38,7 @@ export function Controls() {
         {toggle}
         <p className="text-xs text-ink-3">
           {settings.scenario === "high" ? "Assuming you use your full plan allowance" : settings.scenario === "mid" ? "Assuming typical use" : "Assuming light use"}
-          {settings.basisFilter === "published" ? " · published plans only" : ""} · tokens priced on {ref?.name ?? "reference model"}
+          {settings.basisFilter === "published" ? " · published plans only" : ""}
         </p>
       </div>
     );
@@ -82,29 +79,7 @@ export function Controls() {
         </div>
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="ref-model" className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-ink-3">
-            Convert dollars to tokens using
-          </label>
-          <select
-            id="ref-model"
-            value={settings.refModelId}
-            onChange={(e) => update({ refModelId: e.target.value })}
-            className="w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm"
-          >
-            {referenceModels.map((m) => (
-              <option key={m.id} value={m.id}>
-                {m.name} · {usd(allInCostPerMOut(m)!)} per 1M output
-              </option>
-            ))}
-          </select>
-          <p className="mt-1.5 text-xs text-ink-3">
-            All-in cost per 1M output tokens including the cached context an agent re-reads ({ref ? ref.name : "model"}{" "}
-            list prices). See Methodology.
-          </p>
-        </div>
-
+      <div className="grid gap-5">
         <fieldset>
           <legend className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ink-3">Composite score weights</legend>
           <div className="flex flex-col gap-2">

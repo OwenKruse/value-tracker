@@ -120,7 +120,7 @@
     {
       "id": "kiro-pro", "vendorId": "kiro", "name": "Kiro Pro", "price": 20,
       "apiValue": { "low": 40, "mid": 40, "high": 40 }, "basis": "published", "confidence": "medium",
-      "topModelId": null,
+      "topModelId": "opus-5",
       "limits": "1,000 credits/mo; add-on credits $0.04 each. Valued at the add-on rate.",
       "note": "Credit-to-token mapping is not published, so value is measured at Kiro's own retail credit price. Models: Auto, Claude Sonnet 5 / Opus 5, GPT-5.6, open-weight models.",
       "sourceUrl": "https://kiro.dev/pricing"
@@ -128,7 +128,7 @@
     {
       "id": "kiro-pro-plus", "vendorId": "kiro", "name": "Kiro Pro+", "price": 40,
       "apiValue": { "low": 80, "mid": 80, "high": 80 }, "basis": "published", "confidence": "medium",
-      "topModelId": null,
+      "topModelId": "opus-5",
       "limits": "2,000 credits/mo at $0.04 add-on rate.",
       "note": "See Kiro Pro note.",
       "sourceUrl": "https://kiro.dev/pricing"
@@ -136,7 +136,7 @@
     {
       "id": "kiro-pro-max", "vendorId": "kiro", "name": "Kiro Pro Max", "price": 100,
       "apiValue": { "low": 200, "mid": 200, "high": 200 }, "basis": "published", "confidence": "medium",
-      "topModelId": null,
+      "topModelId": "opus-5",
       "limits": "5,000 credits/mo at $0.04 add-on rate.",
       "note": "See Kiro Pro note.",
       "sourceUrl": "https://kiro.dev/pricing"
@@ -144,7 +144,7 @@
     {
       "id": "kiro-power", "vendorId": "kiro", "name": "Kiro Power", "price": 200,
       "apiValue": { "low": 400, "mid": 400, "high": 400 }, "basis": "published", "confidence": "medium",
-      "topModelId": null,
+      "topModelId": "opus-5",
       "limits": "10,000 credits/mo at $0.04 add-on rate.",
       "note": "See Kiro Pro note.",
       "sourceUrl": "https://kiro.dev/pricing"

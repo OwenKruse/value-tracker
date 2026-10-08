@@ -1,4 +1,4 @@
-import { modelById, models, plans, vendorById } from "./data";
+import { modelById, plans, vendorById } from "./data";
 import type { Model, Plan, PlanMetrics, Settings } from "./types";
 
 /**
@@ -10,7 +10,6 @@ export const WORKLOAD = { cacheReadPerOut: 40, cacheWritePerOut: 2, freshInputPe
 
 export const DEFAULT_SETTINGS: Settings = {
   scenario: "high",
-  refModelId: "sonnet-5.5",
   basisFilter: "all",
   weights: { value: 40, intel: 35, capacity: 25 },
   overrides: {},
@@ -29,8 +28,8 @@ export function allInCostPerMOut(m: Model): number | null {
   );
 }
 
-/** Models that can serve as the dollars-to-tokens reference. */
-export const referenceModels = models.filter((m) => allInCostPerMOut(m) != null);
+/** Used only when a plan's best model has no known API price. */
+const FALLBACK_TOKEN_MODEL_ID = "sonnet-5.5";
 
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 const logNorm = (x: number, lo: number, hi: number) =>
@@ -44,8 +43,7 @@ const ANCHORS = {
 };
 
 export function computeMetrics(settings: Settings, list: Plan[] = plans): PlanMetrics[] {
-  const ref = modelById(settings.refModelId) ?? modelById("sonnet-5.5")!;
-  const refCost = allInCostPerMOut(ref)!;
+  const fallback = modelById(FALLBACK_TOKEN_MODEL_ID)!;
   const w = settings.weights;
 
   const rows = list
@@ -55,8 +53,10 @@ export function computeMetrics(settings: Settings, list: Plan[] = plans): PlanMe
       const overridden = typeof override === "number" && override >= 0;
       const apiValue = overridden ? override : plan.apiValue[settings.scenario];
       const multiple = apiValue / plan.price;
-      const outputTokensM = apiValue / refCost;
       const topModel = modelById(plan.topModelId);
+      const tokenModelAssumed = !topModel || allInCostPerMOut(topModel) == null;
+      const tokenModel = tokenModelAssumed ? fallback : topModel!;
+      const outputTokensM = apiValue / allInCostPerMOut(tokenModel)!;
       const intel = topModel?.aaIndex ?? null;
 
       const vN = logNorm(Math.max(multiple, 1e-6), ...ANCHORS.multiple);
@@ -80,6 +80,8 @@ export function computeMetrics(settings: Settings, list: Plan[] = plans): PlanMe
         costPerMOut: plan.price / outputTokensM,
         intel,
         topModel,
+        tokenModel,
+        tokenModelAssumed,
         score,
       } satisfies PlanMetrics;
     });

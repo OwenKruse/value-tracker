@@ -52,7 +52,6 @@ export interface Weights {
 
 export interface Settings {
   scenario: Scenario;
-  refModelId: string;
   basisFilter: "all" | "published";
   weights: Weights;
   overrides: Record<string, number>;
@@ -69,6 +68,9 @@ export interface PlanMetrics {
   costPerMOut: number;
   intel: number | null;
   topModel: Model | null;
+  /** Model used to turn dollars into tokens: the plan's best model, or an assumed fallback. */
+  tokenModel: Model;
+  tokenModelAssumed: boolean;
   score: number;
 }
 
